@@ -1,0 +1,139 @@
+<html>
+<head>
+<title>Destroy the Machines</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
+<style>
+        .fixed-table-body {
+          height: auto;
+        }
+</style>
+<script>
+
+$.getJSON("https://destroythemachin.es/api/artists", function (jsonFromFile) {
+        $('#artist_table').bootstrapTable({
+                data: jsonFromFile
+        })
+});
+$.getJSON("https://destroythemachin.es/api/tracks", function (jsonFromFile) {
+        $('#track_table').bootstrapTable({
+                data: jsonFromFile
+        })
+});
+$.getJSON("https://destroythemachin.es/api/albums", function (jsonFromFile) {
+        $('#album_table').bootstrapTable({
+                data: jsonFromFile
+        })
+});
+$.getJSON("https://destroythemachin.es/api/latest", function (jsonFromFile) {
+        $('#latest_table').bootstrapTable({
+                data: jsonFromFile
+        })
+});
+
+</script>
+</head>
+<body>
+<div class="container">
+	<h1>Destroy The Machines</h1>
+	<p class="lead">This is a mini project that uses Python, MySQL, and a little bit of jQuery to render tables for updated stats. Every minute, a cron job kicks off that runs a Python script to query the Spotify API. If it finds I'm currently listening to something, it'll log the artist, track, and album and write it to a MySQL table.</p>
+	<p class="lead">The front end is written with Python's Flask. There are a handful API endpoints written to feed the jQuery a JSON object with the details of the tables. You can hit those directly at:</p>
+	<ul>
+		<li><code>https://destroythemachin.es/api/artists</code></li>
+		<li><code>https://destroythemachin.es/api/tracks</code></li>
+		<li><code>https://destroythemachin.es/api/albums</code></li>
+		<li><code>https://destroythemachin.es/api/latest</code></li>
+	</ul>
+	<h4>TODO</h4>
+	<ul>
+		<li>Update MySQL tables to support URLs for artist, song, albums.</li>
+		<li>Include live-updating counter for how many minutes of music I've listened to.</li>
+		<li>Set up an RSS feed for who knows what.</li>
+		<li>Some other bullshit, I'm sure.</li>
+	</ul>
+</div>
+<hr>
+<div class="container">
+	<div class="row">
+		<div class="col-md-8">
+		    <table id="latest_table">
+		            <thead>
+		                    <tr>
+		                            <th data-field="time">Time</th>
+		                            <th data-field="artist">Artist</th>
+		                            <th data-field="track">Track</th>
+		                            <th data-field="album">Album</th>
+		                    </tr>
+		            </thead>
+		    </table>
+	    </div>
+	    <div class="col-md-4">
+	    	<h2>Currently Listening</h2>
+	    	<p class="lead">A list of what I have listened to most recently. You can even see when that was (in GMT).</p>
+		</div>
+	</div>
+</div>
+<hr>
+<div class="container">
+	<div class="row">
+		<div class="col-md-8">
+		    <table id="artist_table">
+		            <thead>
+		                    <tr>
+		                            <th data-field="artist">Artist</th>
+		                            <th data-field="count">Minutes listened</th>
+		                    </tr>
+		            </thead>
+		    </table>
+	    </div>
+	    <div class="col-md-4">
+	    	<h2>Artists by minute</h2>
+	    	<p class="lead">The most listened to artists by gross minutes.</p>
+	    </div>
+    </div>
+</div>
+<hr>
+<div class="container">
+	<div class="row">
+		<div class="col-md-8">
+		    <table id="track_table">
+		            <thead>
+		                    <tr>
+                                            <th data-field="artist">Artist</th>
+		                            <th data-field="track">Track</th>
+		                            <th data-field="count">Minutes listened</th>
+		                    </tr>
+		            </thead>
+		    </table>
+	    </div>
+	    <div class="col-md-4">
+	    	<h2>Tracks by minutes</h2>
+	    	<p class="lead">The most listened to tracks by gross minutes.</p>
+	    </div>
+</div>
+<hr>
+<div class="container">
+	<div class="row">
+		<div class="col-md-8">
+		    <table id="album_table">
+		            <thead>
+		                    <tr>
+                                            <th data-field="artist">Artist</th>
+		                            <th data-field="album">Album</th>
+		                            <th data-field="count">Minutes listened</th>
+		                    </tr>
+		            </thead>
+		    </table>
+	    </div>
+	    <div class="col-md-4">
+	    	<h2>Albums by minutes</h2>
+	    	<p class="lead">The most listened to albums by gross minutes.</p>
+	    </div>
+    </div>
+</div>
+</body>
+</html>
+
